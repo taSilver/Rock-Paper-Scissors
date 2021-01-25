@@ -1,0 +1,35 @@
+body {
+    background-color: #131516;
+}
+
+div {
+    color: rgb(175, 167, 156);
+    border-color: rgb(108, 100, 88);
+    border-width: 3px;
+}
+
+button {
+    width: 90px;
+}
+
+button img{
+    width:50px;
+    height:50px;
+}
+
+header {
+    color: lightgray;
+}
+
+.p1Choice, .p2Choice {
+    width: 150px;
+    height: 150px;
+}
+
+.p1Choice {
+    transform: rotate(90deg);
+}
+
+.p2Choice {
+    transform: scaleX(-1) rotate(90deg);
+}
