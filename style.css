@@ -33,3 +33,7 @@ header {
 .p2Choice {
     transform: scaleX(-1) rotate(90deg);
 }
+
+#otherGames {
+    font-size: small;
+}

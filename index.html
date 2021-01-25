@@ -19,7 +19,7 @@
         <![endif]-->
         <header class="text-md-center p-5">
             <h1>Rock Paper Scissors</h1>
-            <p>Best out of 5 rounds</p>
+            <p>First to 5 points</p>
         </header>
         <section class="container">
             <div class="row">
@@ -31,12 +31,12 @@
                             <div class="col">
                                 <input id="p1" type="text" placeholder="No name" style="text-align: center">
                                 <p>Score: <span id="p1Score">0</span></p>
-                                <button class="btn btn-secondary"><img src="img/hand-rock-grey.svg">Rock</button>
-                                <button class="btn btn-secondary"><img src="img/hand-paper-grey.svg">Paper</button>
-                                <button class="btn btn-secondary"><img src="img/hand-scissors-grey.svg">Scissors</button>
+                                <button id="rock" class="btn btn-secondary" onclick="playerRound('rock')"><img src="img/hand-rock-grey.svg">Rock</button>
+                                <button id="paper" class="btn btn-secondary" onclick="playerRound('paper')"><img src="img/hand-paper-grey.svg">Paper</button>
+                                <button id="scissors" class="btn btn-secondary" onclick="playerRound('scissors')"><img src="img/hand-scissors-grey.svg">Scissors</button>
                             </div>
                             <div class="col">
-                                <input id="p2" type="text" value="Computer" readonly style="text-align: center">
+                                <input id="p2" type="text" value="Opponent" readonly style="text-align: center">
                                 <p>Score: <span id="p2Score">0</span></p>
                                 <button class="btn btn-secondary" disabled><img src="img/hand-rock-grey.svg">Rock</button>
                                 <button class="btn btn-secondary" disabled><img src="img/hand-paper-grey.svg">Paper</button>
@@ -49,28 +49,28 @@
                         </div>
                         <div class="row">
                             <div class="col text-center">
-                                <p>Round result: <span id="result">None</span></p>
+                                <p id="result">Game result: <span id="result">None</span></p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col text-center">
-                                <button type="button" class="btn btn-outline-danger">Restart</button>
+                                <button type="button" id="startBtn" class="btn btn-outline-success" onclick="playerGame()">Start</button>
                             </div>
                         </div>
                     </div>
                 </section>
                 <aside class="col-sm-4 rounded border p-3 m-2">
                     <h2 class="text-center">Other games</h2>
-                    <div class="container" style="overflow-y: scroll;overflow-x: wrap; height: 400px;">
+                    <div class="container" id="otherGames" style="overflow-y: scroll;overflow-x: wrap; height: 400px;">
                         
                     </div>
                 </aside>
             </div>
         </section>
         
-        <script src="main.js" async defer></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" async defer></script>
         <!-- JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+        <script src="main.js" async defer></script>
     </body>
 </html>

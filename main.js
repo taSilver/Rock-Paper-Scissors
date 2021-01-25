@@ -4,6 +4,7 @@ String.prototype.toProperCase = function () {
 
 function playRound(p1Choice, p2Choice, score, round){
     const beats = {"rock": "scissors", "scissors": "paper", "paper": "rock"}
+    
     let str
     [p1, p2] = Object.keys(score)
     if (p1Choice == p2Choice){
@@ -18,53 +19,105 @@ function playRound(p1Choice, p2Choice, score, round){
         }
         
     }
-    return (score, str)
+    return [score, str]
 }
 
-function playerMove(){
-    let playerSelection = null;
-    while (!["rock", "paper", "scissors"].includes(playerSelection)){
-        playerSelection = prompt("Enter your selection (Paper, Scissors, Rock):").toLowerCase();
-    }
-    return playerSelection;
+function playerRound(p1Choice){
+    let p2Choice = computerMove()
+    $(".p1Choice").attr("src", `img/hand-${p1Choice}-grey.svg`)
+    $(".p2Choice").attr("src", `img/hand-${p2Choice}-grey.svg`)
+    let [new_score, str] = playRound(p1Choice, p2Choice, score, round)
+    checkRound(new_score, '<span style="color:gold">' + str + '</span>')
 }
 
 function computerMove(){
     return ["rock", "paper", "scissors"][Math.floor(Math.random() * 3)]
 }
 
-function game(players, rounds){
-    [p1, p2] = Object.keys(players)
-    let score = {[p1]: 0, [p2]: 0}
-    let str
-    for (let i = 1; i <= rounds; i++) {
-        score, str = playRound(players[p1](), players[p2](), score, i)    
-        console.log(str)        
+function checkRound(score, stringRes){  
+    logResult(stringRes)
+    updateText()
+    if(score[p1] == scoreLimit || score[p2] == scoreLimit){
+        if(score[p1] == score[p2]){
+            $("#result").text(`Game Result: It was a draw at ${score[p1]} point(s) each!`)
+        } else {
+            let winner = score[p1] > score[p2] ? p1 : p2
+            $("#result").text(`Game Result: ${winner} wins! They scored ${score[winner]} point(s)`)
+        }
+        disableItems()   
     }
-    if(score[p1] == score[p2]){
-        console.log("It was a draw at ${} points each!", score[p1])
-    } else {
-        let winner = score[p1] > score[p2] ? p1 : p2
-        console.log(`${winner} wins! They got ${score[winner]} points`)
-    }
+    round++
 }
 
 function playerGame(){
-    p1 = prompt("Enter your name: ").toProperCase();
-    p2 = `Computer#${Math.floor(Math.random() * 10000)}`
-    rounds = 5
-    players = {[p1]: playerMove, [p2]: computerMove}
-    game(players, rounds)
+    p1 = $("#p1").val()
+    if (p1 == ""){
+        p1 = "No name"
+    }
+    p2 = computerName()
+    $("#p2").val(p2)
+    enableItems()
+    scoreLimit = 5
+    round = 1
+    score = {[p1]: 0, [p2]: 0}
+    updateText()
+}
+
+function updateText() {
+    $("#p1Score").text(score[p1])   
+    $("#p2Score").text(score[p2])
+    $("#round").text(round)
+}
+
+function enableItems() {
+    const btnList = ["rock", "paper", "scissors"]
+    btnList.forEach(btn => {
+        $("#"+btn).attr("disabled", false)
+    });
+    $("#p1").attr("readonly", true)
+    $("#startBtn").text("Restart")
+    $("#startBtn").attr("class", "btn btn-outline-danger")
+}
+
+function disableItems() {
+    const btnList = ["rock", "paper", "scissors"]
+    btnList.forEach(btn => {
+        $("#"+btn).attr("disabled", true)
+    });
+    $("#p1").attr("readonly", false)
+    $("#startBtn").text("Start")
+    $("#startBtn").attr("class", "btn btn-outline-success")
 }
 
 function genDummyGame() {
-
+    let randPlayers = {[computerName()]: 0, [computerName()]: 0}
+    let randRound = Math.floor(Math.random() * 100)
+    logResult(playRound(computerMove(), computerMove(), randPlayers, randRound)[1])
 }
 
-(function loop() {
+function logResult(string) {
+    $("#otherGames").prepend(`<p>${string}</p>`)
+    if ($("#otherGames p").length > 25){
+        $("#otherGames p").last().remove();
+    }
+}
+
+function computerName() {
+    return `Computer#${Math.floor(Math.random() * 10000)}`
+}
+
+(async function loop() {
     const rand = Math.round(Math.random() * (3000 - 500)) + 500;
     setTimeout(() => {
         genDummyGame();
         loop();
     }, rand);
-})
+})()
+
+function setChoice(opt) {
+    choice = opt
+}
+
+window.onload = () => {
+    disableItems()
+}
